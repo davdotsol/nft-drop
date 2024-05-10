@@ -196,4 +196,50 @@ describe('NFT contract', function () {
       expect(tokenIds[2].toString()).to.equal('3');
     });
   });
+
+  describe('Minting', function () {
+    it('Should deduct the contract balance', async function () {
+      const { nft, deployer, minter } = await loadFixture(deployFixture);
+      let tx = await nft
+        .connect(minter)
+        .mint(1, { value: ethers.parseEther('10') });
+      await tx.wait();
+
+      const balanceBefore = await ethers.provider.getBalance(deployer.address);
+
+      tx = await nft.connect(deployer).withdraw();
+      tx.wait();
+      expect(await ethers.provider.getBalance(nft.target)).to.equal(0);
+
+      expect(
+        await ethers.provider.getBalance(deployer.address)
+      ).to.be.greaterThan(balanceBefore);
+    });
+
+    it('Should emit Withdraw event', async function () {
+      const { nft, deployer, minter } = await loadFixture(deployFixture);
+      let tx = await nft
+        .connect(minter)
+        .mint(1, { value: ethers.parseEther('10') });
+      await tx.wait();
+
+      const balanceBefore = await ethers.provider.getBalance(deployer.address);
+
+      tx = await nft.connect(deployer).withdraw();
+      tx.wait();
+      await expect(tx)
+        .to.emit(nft, 'Withdraw')
+        .withArgs(ethers.parseEther('10'), deployer.address);
+    });
+
+    it('Should prevents non-owner from withdrawing', async function () {
+      const { nft, minter } = await loadFixture(deployFixture);
+      let tx = await nft
+        .connect(minter)
+        .mint(1, { value: ethers.parseEther('10') });
+      await tx.wait();
+
+      await expect(nft.connect(minter).withdraw()).to.be.reverted;
+    });
+  });
 });
