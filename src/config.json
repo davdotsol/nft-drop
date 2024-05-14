@@ -6,5 +6,10 @@
     "crowdsale": {
       "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
     }
+  },
+  "11155111": {
+    "nft": {
+      "address": "0x93607bC3d1aDf204118E541828939cE7AF407010"
+    }
   }
 }
