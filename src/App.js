@@ -1,9 +1,14 @@
+/* global BigInt */
 import { useEffect, useState } from 'react';
 import Navigation from './components/Navigation';
+import Countdown from 'react-countdown';
 import { ethers } from 'ethers';
 import Info from './components/Info';
+import Data from './components/Data';
+import Mint from './components/Mint';
 
 import NFT_ABI from './abis/NFT.json';
+import preview from './preview.png';
 
 import config from './config.json';
 import Loading from './components/Loading';
@@ -11,6 +16,7 @@ import Loading from './components/Loading';
 function App() {
   const [account, setAccount] = useState(null);
   const [provider, setProvider] = useState(null);
+  const [contract, setContract] = useState(null);
   const [accountBalance, setAccountBalance] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [revealTime, setRevealTime] = useState(0);
@@ -31,6 +37,8 @@ function App() {
         tempProvider
       );
 
+      setContract(tempContract);
+
       const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts',
       });
@@ -47,12 +55,13 @@ function App() {
       // Fetch countdown
       const allowMintingOn = await tempContract.allowMintingOn();
       setRevealTime(allowMintingOn.toString() + '000');
-
+      const maxSupply = await tempContract.maxSupply();
       // Fetch max supply
-      setMaxSupply(await tempContract.maxSupply());
+      setMaxSupply(BigInt(maxSupply.toString()));
 
+      const totalSupply = await tempContract.totalSupply();
       // Fetch total supply
-      setTotalSupply(await tempContract.totalSupply());
+      setTotalSupply(BigInt(totalSupply.toString()));
 
       // Fetch cost
       setCost(await tempContract.cost());
@@ -77,24 +86,55 @@ function App() {
     <div className="container mx-auto px-4">
       <Navigation />
 
-      <h1 className="my-4 text-center">DApp Punks</h1>
+      <h1 className="my-4 text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-teal-600 md:text-5xl lg:text-6xl dark:text-white">
+        DApp Punks
+      </h1>
 
       {isLoading ? (
         <Loading />
       ) : (
-        <div class="px-2">
-          <div class="flex -mx-2">
-            <div class="w-1/2 px-2">
-              <div class="bg-gray-400 h-12"></div>
+        <div className="px-2">
+          <div className="flex -mx-2">
+            <div className="w-1/2 px-2">
+              <div className="text-center">
+                {accountBalance > 0 ? (
+                  <img
+                    src={`https://gateway.pinata.cloud/ipfs/QmQPEMsfd1tJnqYPbnTQCjoa8vczfsV1FmqZWgRdNQ7z3g/${accountBalance.toString()}.png`}
+                    alt="OpenPunk"
+                    width="400px"
+                    height="400px"
+                    className="mx-auto"
+                  />
+                ) : (
+                  <img src={preview} alt="Preview" className="mx-auto" />
+                )}
+              </div>
             </div>
-            <div class="w-1/2 px-2">
-              <div class="bg-gray-500 h-12"></div>
+            <div className="w-1/2 px-2">
+              <div className="text-center mb-4">
+                <Countdown
+                  date={parseInt(revealTime)}
+                  className="text-teal-700"
+                />
+              </div>
+              <Data
+                maxSupply={maxSupply}
+                totalSupply={totalSupply}
+                cost={cost}
+                balance={accountBalance}
+              />
+              <Mint
+                provider={provider}
+                contract={contract}
+                cost={cost}
+                setIsLoading={setIsLoading}
+              />
             </div>
           </div>
         </div>
       )}
 
-      <hr />
+      <hr className="my-4 border-teal-500" />
       {account && <Info account={account} accountBalance={accountBalance} />}
     </div>
   );

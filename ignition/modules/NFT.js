@@ -1,8 +1,8 @@
 const { buildModule } = require('@nomicfoundation/hardhat-ignition/modules');
 const { ethers } = require('hardhat');
 
-const NAME = '';
-const SYMBOL = '';
+const NAME = 'DAPP Punks';
+const SYMBOL = 'DPP';
 const COST = ethers.parseEther('10');
 const MAX_SUPPLY = 25;
 const NFT_MINT_DATE = (Date.now() + 60000).toString().slice(0, 10);
