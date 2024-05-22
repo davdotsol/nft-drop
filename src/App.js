@@ -25,6 +25,7 @@ function App() {
   const [cost, setCost] = useState(0);
   const [paused, setPaused] = useState(false);
   const [whitelisted, setWhitelisted] = useState(false);
+  const [userNFTs, setUserNFTs] = useState([]);
 
   // Random component
   const Completionist = () => <span>You are good to go!</span>;
@@ -93,6 +94,9 @@ function App() {
 
       const isWhitelisted = await tempContract.whitelisted(tempAccount);
       setWhitelisted(isWhitelisted);
+
+      const userNFTs = await tempContract.walletOfOwner(tempAccount);
+      setUserNFTs(userNFTs.map((tokenId) => tokenId.toString()));
     }
 
     setIsLoading(false);
@@ -136,6 +140,16 @@ function App() {
                 ) : (
                   <img src={preview} alt="Preview" className="mx-auto" />
                 )}
+              </div>
+              <div className="flex flex-wrap justify-center mt-4">
+                {userNFTs.map((tokenId) => (
+                  <img
+                    key={tokenId}
+                    src={`https://gateway.pinata.cloud/ipfs/QmQPEMsfd1tJnqYPbnTQCjoa8vczfsV1FmqZWgRdNQ7z3g/${tokenId}.png`}
+                    alt={`NFT ${tokenId}`}
+                    className="w-24 h-24 m-2"
+                  />
+                ))}
               </div>
             </div>
             <div className="w-1/2 px-2">
