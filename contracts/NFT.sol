@@ -13,6 +13,7 @@ contract NFT is ERC721Enumerable, Ownable {
     uint256 public maxMintAmount;
     string public baseURI;
     bool public paused;
+    mapping(address => bool) public whitelisted;
 
     event Mint(uint256 amount, address indexed minter);
     event Withdraw(uint256 amount, address indexed owner);
@@ -20,6 +21,7 @@ contract NFT is ERC721Enumerable, Ownable {
     event BaseURIUpdated(string newBaseURI);
     event AllowMintingOnUpdated(uint256 newAllowMintingOn);
     event Paused(bool isPaused);
+    event Whitelisted(address indexed user, bool isWhitelisted);
 
     constructor(
         string memory _name,
@@ -47,6 +49,7 @@ contract NFT is ERC721Enumerable, Ownable {
 
     function mint(uint256 _mintAmount) public payable {
         require(!paused, "Minting is paused");
+        require(whitelisted[msg.sender], "You are not whitelisted");
         require(_mintAmount > 0, "Mint amount must be greater than zero");
         require(
             _mintAmount <= maxMintAmount,
@@ -110,6 +113,16 @@ contract NFT is ERC721Enumerable, Ownable {
     function resumeMinting() public onlyOwner {
         paused = false;
         emit Paused(false);
+    }
+
+    function addWhitelist(address _user) public onlyOwner {
+        whitelisted[_user] = true;
+        emit Whitelisted(_user, true);
+    }
+
+    function removeWhitelist(address _user) public onlyOwner {
+        whitelisted[_user] = false;
+        emit Whitelisted(_user, false);
     }
 
     function withdraw() public onlyOwner {
