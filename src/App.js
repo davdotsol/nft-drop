@@ -72,10 +72,6 @@ function App() {
 
       // Fetch countdown
       const allowMintingOn = await tempContract.allowMintingOn();
-      console.log(
-        "allowMintingOn.toString() + '000'",
-        parseInt(allowMintingOn.toString() + '000')
-      );
       // setRevealTime(allowMintingOn.toString() + '000');
       setRevealTime(Date.now() + 5000);
       const maxSupply = await tempContract.maxSupply();

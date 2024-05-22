@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Loading from './Loading';
+import { ethers } from 'ethers';
 
 const Mint = ({
   provider,
@@ -10,14 +11,20 @@ const Mint = ({
   whitelisted,
 }) => {
   const [isWaiting, setIsWaiting] = useState(false);
+  const [mintAmount, setMintAmount] = useState(1);
+
   const mintHandler = async (e) => {
     e.preventDefault();
     setIsWaiting(true);
 
     try {
-      console.log('cost', cost.toString());
       const signer = await provider.getSigner();
-      const tx = await contract.connect(signer).mint(1, { value: cost });
+      const totalCostInWei = ethers.parseEther(
+        (ethers.formatUnits(cost.toString(), 'ether') * mintAmount).toString()
+      );
+      const tx = await contract
+        .connect(signer)
+        .mint(mintAmount, { value: totalCostInWei });
       await tx.wait();
     } catch (error) {
       window.alert('User rejected or transaction reverted');
@@ -31,6 +38,13 @@ const Mint = ({
         <Loading />
       ) : (
         <form onSubmit={mintHandler} className="inline-block">
+          <input
+            type="number"
+            value={mintAmount}
+            onChange={(e) => setMintAmount(e.target.value)}
+            min="1"
+            className="mb-2 p-2 border border-gray-300 rounded"
+          />
           <button
             type="submit"
             className="bg-teal-500 text-white py-2 px-4 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400"
