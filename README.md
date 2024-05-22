@@ -1,70 +1,87 @@
-# Getting Started with Create React App
+# NFT Drop DApp
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the NFT Drop DApp! This project is a decentralized application (DApp) for minting NFTs (Non-Fungible Tokens) using the Ethereum blockchain. The smart contract is deployed on the Sepolia test network, and the front end is deployed on Vercel.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Deployment](#deployment)
+- [Usage](#usage)
 
-### `npm start`
+## Project Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The NFT Drop DApp allows users to mint their own NFTs by interacting with a smart contract deployed on the Ethereum Sepolia test network. The application is built with React and utilizes Hardhat and the ethers.js library to interact with the Ethereum blockchain.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- Mint NFTs directly from the DApp
+- Whitelisted users can mint NFTs
+- Owner can pause and resume minting
+- Display all NFTs owned by the user
+- Responsive design with Tailwind CSS
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting Started
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js (v18 or later)
+- npm or yarn
+- MetaMask extension for your web browser
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone the repository:
 
-### `npm run eject`
+   ```bash
+   git clone https://github.com/your-username/nft-drop-dapp.git
+   cd nft-drop-dapp
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Install the dependencies
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. Add your environment variables
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   npx hardhat vars set ALCHEMY_API_KEY
+   npx hardhat vars set SEPOLIA_PRIVATE_KEY
+   ```
 
-## Learn More
+### Running the application
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Start the development server
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   ```bash
+   npm run start
+   ```
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+2. Open your web browser and visit **\`http://localhost:3000\`**
 
 ### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+The application is deployed on Vercel and can be accessed at the following URL:
 
-### `npm run build` fails to minify
+https://nft-drop-cyan.vercel.app/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The smart contract is deployed on the Sepolia test network and can be viewed on Etherscan:
+
+[Smart Contract on Etherscan](https://sepolia.etherscan.io/address/0x559b4cd01dd8a546b6c9731d2d2a1ceb1de79555)
+
+### Usage
+
+1. Connect your MetaMask wallet to the Sepolia test network.
+
+2. Ensure you have Sepolia ETH in your wallet for transaction fees.
+
+3. Visit the deployed application at https://nft-drop-cyan.vercel.app/.
+
+4. If you are whitelisted, you can mint NFTs by specifying the number of NFTs and clicking the "Mint" button.
+
+5. View your minted NFTs displayed under the main preview image.
