@@ -64,10 +64,7 @@ function App() {
       setAccount(tempAccount);
 
       // Fetch account balance
-      const tempAccountBalance = ethers.formatUnits(
-        await tempContract.balanceOf(tempAccount),
-        18
-      );
+      const tempAccountBalance = await tempContract.balanceOf(tempAccount);
       setAccountBalance(tempAccountBalance);
 
       // Fetch countdown

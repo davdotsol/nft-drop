@@ -20,7 +20,7 @@ const Data = ({ maxSupply, totalSupply, cost, balance }) => {
       </p>
       <p>
         <strong className="text-teal-700">You own:</strong>
-        <span className="text-teal-900 ml-1">{balance.toString()} ETH</span>
+        <span className="text-teal-900 ml-1">{balance.toString()}</span>
       </p>
     </div>
   );

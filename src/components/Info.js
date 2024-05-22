@@ -7,7 +7,7 @@ const Info = ({ account, accountBalance }) => {
       </p>
       <p>
         <strong>Tokens owned: </strong>
-        {accountBalance}
+        {accountBalance.toString()}
       </p>
     </div>
   );

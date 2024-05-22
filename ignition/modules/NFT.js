@@ -3,7 +3,7 @@ const { ethers } = require('hardhat');
 
 const NAME = 'DAPP Punks';
 const SYMBOL = 'DPP';
-const COST = ethers.parseEther('10');
+const COST = ethers.parseEther('0.001');
 const MAX_SUPPLY = 25;
 const NFT_MINT_DATE = '1716360645'; // (Date.now() + 6000).toString().slice(0, 10)
 const IPFS_METADATA_URI =
