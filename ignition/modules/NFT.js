@@ -5,6 +5,7 @@ const NAME = 'DAPP Punks';
 const SYMBOL = 'DPP';
 const COST = ethers.parseEther('0.001');
 const MAX_SUPPLY = 25;
+const MAX_MINT_AMOUNT = 5;
 const NFT_MINT_DATE = '1716360645'; // (Date.now() + 6000).toString().slice(0, 10)
 const IPFS_METADATA_URI =
   'ipfs://QmQPEMsfd1tJnqYPbnTQCjoa8vczfsV1FmqZWgRdNQ7z3g/';
@@ -14,6 +15,7 @@ module.exports = buildModule('NFTModule', (m) => {
   const symbol = m.getParameter('symbol', SYMBOL);
   const cost = m.getParameter('cost', COST);
   const max_supply = m.getParameter('max_supply', MAX_SUPPLY);
+  const max_mint_amount = m.getParameter('max_mint_amount', MAX_MINT_AMOUNT);
   const mint_date = m.getParameter('mint_date', NFT_MINT_DATE);
   const ipfs_uri = m.getParameter('ipfs_uri', IPFS_METADATA_URI);
 
@@ -22,6 +24,7 @@ module.exports = buildModule('NFTModule', (m) => {
     symbol,
     cost,
     max_supply,
+    max_mint_amount,
     mint_date,
     ipfs_uri,
   ]);
