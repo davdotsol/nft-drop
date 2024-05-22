@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import Loading from './Loading';
 
-const Mint = ({ provider, contract, cost, setIsLoading }) => {
+const Mint = ({
+  provider,
+  contract,
+  cost,
+  setIsLoading,
+  paused,
+  whitelisted,
+}) => {
   const [isWaiting, setIsWaiting] = useState(false);
   const mintHandler = async (e) => {
     e.preventDefault();
@@ -27,9 +34,16 @@ const Mint = ({ provider, contract, cost, setIsLoading }) => {
           <button
             type="submit"
             className="bg-teal-500 text-white py-2 px-4 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400"
+            disabled={paused || !whitelisted}
           >
             Mint
           </button>
+          {paused && (
+            <p className="text-red-500 mt-2">Minting is currently paused.</p>
+          )}
+          {!whitelisted && (
+            <p className="text-red-500 mt-2">You are not whitelisted.</p>
+          )}
         </form>
       )}
     </div>

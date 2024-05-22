@@ -23,6 +23,8 @@ function App() {
   const [maxSupply, setMaxSupply] = useState(0);
   const [totalSupply, setTotalSupply] = useState(0);
   const [cost, setCost] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [whitelisted, setWhitelisted] = useState(false);
 
   // Random component
   const Completionist = () => <span>You are good to go!</span>;
@@ -85,6 +87,12 @@ function App() {
 
       // Fetch cost
       setCost(await tempContract.cost());
+
+      const paused = await tempContract.paused();
+      setPaused(paused);
+
+      const isWhitelisted = await tempContract.whitelisted(tempAccount);
+      setWhitelisted(isWhitelisted);
     }
 
     setIsLoading(false);
@@ -149,6 +157,8 @@ function App() {
                 contract={contract}
                 cost={cost}
                 setIsLoading={setIsLoading}
+                paused={paused}
+                whitelisted={whitelisted}
               />
             </div>
           </div>
