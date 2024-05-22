@@ -24,6 +24,24 @@ function App() {
   const [totalSupply, setTotalSupply] = useState(0);
   const [cost, setCost] = useState(0);
 
+  // Random component
+  const Completionist = () => <span>You are good to go!</span>;
+
+  // Renderer callback with condition
+  const renderer = ({ hours, minutes, seconds, completed }) => {
+    if (completed) {
+      // Render a completed state
+      return <Completionist />;
+    } else {
+      // Render a countdown
+      return (
+        <span>
+          {hours}:{minutes}:{seconds}
+        </span>
+      );
+    }
+  };
+
   const loadBlockchainData = async () => {
     const tempProvider = new ethers.BrowserProvider(window.ethereum);
     setProvider(tempProvider);
@@ -54,7 +72,12 @@ function App() {
 
       // Fetch countdown
       const allowMintingOn = await tempContract.allowMintingOn();
-      setRevealTime(allowMintingOn.toString() + '000');
+      console.log(
+        "allowMintingOn.toString() + '000'",
+        parseInt(allowMintingOn.toString() + '000')
+      );
+      // setRevealTime(allowMintingOn.toString() + '000');
+      setRevealTime(Date.now() + 5000);
       const maxSupply = await tempContract.maxSupply();
       // Fetch max supply
       setMaxSupply(BigInt(maxSupply.toString()));
@@ -111,9 +134,10 @@ function App() {
               </div>
             </div>
             <div className="w-1/2 px-2">
-              <div className="text-center mb-4">
+              <div className="text-center mb-4 text-4xl font-bold text-teal-700">
                 <Countdown
-                  date={parseInt(revealTime)}
+                  date={Date.now() + 5000}
+                  renderer={renderer}
                   className="text-teal-700"
                 />
               </div>
