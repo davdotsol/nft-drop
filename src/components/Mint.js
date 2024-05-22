@@ -34,7 +34,7 @@ const Mint = ({
           <button
             type="submit"
             className="bg-teal-500 text-white py-2 px-4 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400"
-            disabled={paused || !whitelisted}
+            disabled={paused /*|| !whitelisted*/}
           >
             Mint
           </button>

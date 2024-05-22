@@ -49,7 +49,7 @@ contract NFT is ERC721Enumerable, Ownable {
 
     function mint(uint256 _mintAmount) public payable {
         require(!paused, "Minting is paused");
-        require(whitelisted[msg.sender], "You are not whitelisted");
+        // require(whitelisted[msg.sender], "You are not whitelisted");
         require(_mintAmount > 0, "Mint amount must be greater than zero");
         require(
             _mintAmount <= maxMintAmount,
